@@ -19,13 +19,6 @@ printSearchResult (a, Just _) = do
 printSearchResult (a, Nothing) = do
     print $ a <> " is not found"
 
-printSearchResults :: [(String, Maybe Int)] -> IO ()                  -- optional type signature
-printSearchResults [] = do
-    return ()
-
-printSearchResults (result:otherResults) = do
-    printSearchResult result
-    printSearchResults otherResults
 
 split :: [Char] -> [Char] -> [[Char]]
 split [] _  = []
@@ -49,4 +42,4 @@ main = do
     contents <- readFile filePath
     let fileWords = split contents ", ?;.\t\n\r"
     let searchResults = search inputWords fileWords 
-    printSearchResults searchResults
+    mapM_ (\r -> printSearchResult r) searchResults
